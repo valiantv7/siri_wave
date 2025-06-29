@@ -13,11 +13,7 @@ class IOS9SiriWaveform extends StatefulWidget {
   ///
   /// Additionally, you can customize whether to show the support bar on the
   /// waveform using [showSupportBar]. By default, the support bar is shown.
-  const IOS9SiriWaveform({
-    required this.controller,
-    super.key,
-    this.showSupportBar = true,
-  });
+  const IOS9SiriWaveform({required this.controller, super.key, this.showSupportBar = true});
 
   /// The controller that manages the properties and behavior of the waveform.
   final IOS9SiriWaveformController controller;
@@ -31,8 +27,7 @@ class IOS9SiriWaveform extends StatefulWidget {
   IOS9SiriWaveformState createState() => IOS9SiriWaveformState();
 }
 
-class IOS9SiriWaveformState extends State<IOS9SiriWaveform>
-    with SingleTickerProviderStateMixin {
+class IOS9SiriWaveformState extends State<IOS9SiriWaveform> with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
 
   @override
@@ -43,8 +38,7 @@ class IOS9SiriWaveformState extends State<IOS9SiriWaveform>
       // the duration value does not impact the animation in any way.
       duration: const Duration(seconds: 1),
     );
-    final IOS9SiriWaveformController(:amplitude, :speed) = widget.controller;
-    if (amplitude > 0 && speed > 0) _animationController.repeat();
+    _animationController.repeat();
     super.initState();
   }
 
@@ -74,15 +68,11 @@ class IOS9SiriWaveformState extends State<IOS9SiriWaveform>
       controller: widget.controller,
     );
     final customPaint = CustomPaint(
-      foregroundPainter:
-          widget.controller.amplitude > 0 ? waveformPainter : null,
+      foregroundPainter: waveformPainter,
       painter: widget.showSupportBar ? supportBarPainter : null,
       size: Size.infinite,
     );
 
-    return AnimatedBuilder(
-      animation: _animationController,
-      builder: (_, __) => customPaint,
-    );
+    return AnimatedBuilder(animation: _animationController, builder: (_, __) => customPaint);
   }
 }
